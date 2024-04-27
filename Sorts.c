@@ -10,25 +10,25 @@ int barrier_search(int elem, int arr[], int size);
 int linear_search(int elem, int arr[], int size);
 int bubble_sort2(int arr[], int size);
 
-int arr[MAX], arrCopy[MAX]; //если не сделать то выдаст ошибку С6262
+int arr[MAX], arrCopy[MAX];
 
 int main() {
     setlocale(0, "");
     srand();
     clock_t start, end;
     double timeOfLinearS = -1, timeOfBubbleS = -1, timeOfInsertionS = -1, timeOfBubbleS2 = -1;
-    int answer, flagInput = 0, flagSort = 0, size, element, elementSearch,indexElementS, countOpLinearS = 0, countOpBubbleS = 0, countOpInsertionS = 0, countOpBubbleS2 = 0;
+    int answer, flagInput = 0, flagSort = 0, size, element, elementSearch, indexElementS, countOpLinearS = 0, countOpBubbleS = 0, countOpInsertionS = 0, countOpBubbleS2 = 0;
     do //меню
     {
         printf("1. Ввод массива\n");
-        printf("2. Линейная сортиовка\n");
-        printf("3. Сортиовка пузырьком\n");
+        printf("2. Линейная сортировка\n");
+        printf("3. Сортировка пузырьком\n");
         printf("4. Сортировка вставкой\n");
         printf("5. Бинарный поиск\n");
         printf("6. Линейный поиск\n");
         printf("7. Поиск с барьером\n");
         printf("8. Сравнение сортировок\n");
-        printf("9. Сортировка пузырьком с интернета\n");
+        printf("9. Сортировка пузырьком из интернета\n");
         printf("10. Вывод массива\n");
 
         printf("\"0\" - символ выхода из меню\n");
@@ -38,13 +38,13 @@ int main() {
         {
         case 1: //input massive
             timeOfLinearS = timeOfBubbleS = timeOfInsertionS = timeOfBubbleS2 = -1;
-            countOpLinearS = countOpBubbleS = countOpInsertionS = countOpBubbleS2 = 0;
+            flagInput = flagSort = countOpLinearS = countOpBubbleS = countOpInsertionS = countOpBubbleS2 = 0;
             do
             {
                 printf("Введите размер массива: ");
                 scanf_s("%d", &size);
             } while (size < 0);
-            
+
             if (size <= 20)
             {
                 for (int i = 0; i < size; i++)
@@ -59,9 +59,9 @@ int main() {
             else
             {
                 for (int i = 0; i < size; i++)
-                { 
-                arr[i] = rand();
-                arrCopy[i] = arr[i];
+                {
+                    arr[i] = rand();
+                    arrCopy[i] = arr[i];
                 }
             }
             printf("\n\n");
@@ -139,49 +139,68 @@ int main() {
 
         case 6: //linear search
             system("cls");
-            printf("Введите искомый элемент: ");
-            scanf_s("%d", &elementSearch);
-            indexElementS = linear_search(elementSearch, arr, size);
-            if (indexElementS > -1)
-                printf("Элемент в массиве, его индекс: %d\n\n", indexElementS);
+            if (flagInput == 1)
+            {
+                printf("Введите искомый элемент: ");
+                scanf_s("%d", &elementSearch);
+                indexElementS = linear_search(elementSearch, arr, size);
+                if (indexElementS > -1)
+                    printf("Элемент в массиве, его индекс: %d\n\n", indexElementS);
+                else
+                    printf("Элемента нет в массиве\n\n");
+                break;
+            }
             else
-                printf("Элемента нет в массиве\n\n");
-            break;
+                printf("Сначала нужно выполнить заполнение массива\n\n");
+
+
 
 
         case 7: // barrier
             system("cls");
-            printf("Введите искомый элемент: ");
-            scanf_s("%d", &elementSearch);
-            indexElementS = barrier_search(elementSearch, arr, size);
-            if (indexElementS > -1)
-                printf("Элемент в массиве, его индекс: %d\n\n", indexElementS);
+            if (flagInput == 1)
+            {
+                printf("Введите искомый элемент: ");
+                scanf_s("%d", &elementSearch);
+                indexElementS = barrier_search(elementSearch, arr, size);
+                if (indexElementS > -1)
+                    printf("Элемент в массиве, его индекс: %d\n\n", indexElementS);
+                else
+                    printf("Элемента нет в массиве\n\n");
+                break;
+            }
             else
-                printf("Элемента нет в массиве\n\n");
-            break;
+                printf("Сначала нужно выполнить заполнение массива\n\n");
+
 
 
         case 8://comparison
             system("cls");
+            if (flagInput == 1)
+            {
                 printf("                              Время                      Количесвто операций\n");
-            if (timeOfLinearS == -1)
-                printf("Линейная сортиовка            Время не засекалось        %d\n", countOpLinearS);
+                if (timeOfLinearS == -1)
+                    printf("Линейная сортиовка            Время не засекалось        %d\n", countOpLinearS);
+                else
+                    printf("Линейная сортиовка            %lfc                       %d\n", timeOfLinearS, countOpLinearS);
+                if (timeOfBubbleS == -1)
+                    printf("Сортировка пузырьком          Время не засекалось        %d\n", countOpBubbleS);
+                else
+                    printf("Сортировка пузырьком          %lfc                       %d\n", timeOfBubbleS, countOpBubbleS);
+                if (timeOfInsertionS == -1)
+                    printf("Сортировка вставкой           Время не засекалось        %d\n", countOpInsertionS);
+                else
+                    printf("Сортировка вставкой           %lfc                       %d\n", timeOfInsertionS, countOpInsertionS);
+                if (timeOfBubbleS2 == -1)
+                    printf("Сортировка пузырьком 2        Время не засекалось        %d\n", countOpBubbleS2);
+                else
+                    printf("Сортировка пузырьком 2        %lfc                       %d\n", timeOfBubbleS2, countOpBubbleS2);
+                printf("\n\n");
+                break;
+            }
             else
-                printf("Линейная сортиовка            %lfc                       %d\n", timeOfLinearS, countOpLinearS);
-            if (timeOfBubbleS == -1)
-                printf("Сортировка пузырьком          Время не засекалось        %d\n", countOpBubbleS);
-            else
-                printf("Сортировка пузырьком          %lfc                       %d\n", timeOfBubbleS, countOpBubbleS);
-            if (timeOfInsertionS == -1)
-                printf("Сортировка вставкой           Время не засекалось        %d\n", countOpInsertionS);
-            else
-                printf("Сортировка вставкой           %lfc                       %d\n", timeOfInsertionS, countOpInsertionS);
-            if (timeOfBubbleS2 == -1)
-                printf("Сортировка пузырьком 2        Время не засекалось        %d\n", countOpBubbleS2);
-            else
-                printf("Сортировка пузырьком 2        %lfc                       %d\n", timeOfBubbleS2, countOpBubbleS2);
-            printf("\n\n");
-            break;
+                printf("Сначала нужно выполнить заполнение массива\n\n");
+
         case 9:
             system("cls");
             if (flagInput == 1)
@@ -190,8 +209,6 @@ int main() {
                 countOpBubbleS2 = bubble_sort2(arr, size);
                 end = clock();
                 timeOfBubbleS2 = ((double)end - start) / ((double)CLOCKS_PER_SEC);
-                for (int i = 0; i < size; i++)
-                    arr[i] = arrCopy[i];
                 flagSort = 1;
             }
             else
@@ -200,11 +217,16 @@ int main() {
 
         case 10:
             system("cls");
-            //comparison
-            for (int i = 0; i < size; i++)
-                printf("%d  ", arr[i]);
-            printf("\n\n");
-            break;
+            if (flagInput == 1)
+            {
+                //comparison
+                for (int i = 0; i < size; i++)
+                    printf("%d  ", arr[i]);
+                printf("\n\n");
+                break;
+            }
+            else
+                printf("Сначала нужно выполнить заполнение массива\n\n");
 
         default:
             printf("Нет такого пункта\n");
@@ -213,7 +235,7 @@ int main() {
 
     } while (answer != 0);
 
- 
+
 
     return 0;
 }
@@ -221,23 +243,26 @@ int main() {
 
 
 int bubble_sort(int arr[], int size) {
-    int temp,countOfPerm = 0, countOfOp = 0;
+    int temp, countOfPerm = 0, countOfOp = 0, k = 0;
+    countOfOp += 3;
     do
     {
         countOfPerm = 0;
         countOfOp += 1;
-        for (int j = 0; j < size - 1; j++)
+        for (int j = 0; j < size - k - 1; j++)
         {
             if (arr[j] > arr[j + 1])
             {
                 temp = arr[j];
                 arr[j] = arr[j + 1];
                 arr[j + 1] = temp;
-                countOfOp += 5;
                 countOfPerm++;
+                countOfOp += 6;
             }
             countOfOp += 1;
         }
+        k++;
+        countOfOp += 1;
     } while (countOfPerm > 0);
     return countOfOp;
 }
@@ -270,14 +295,14 @@ int linear_sort(int arr[], int size) {
 
 int insertion_sort(int arr[], int size) {
     int temp, indexFirstRem = 1, i, k, countOfOp = 0; //индекс первого элемента из остатка, т.е. граница между итогом и остатком
-    countOfOp+= 2;
+    countOfOp += 2;
     while (indexFirstRem + 1 <= size) //работает, пока индекс первого элемента из остатка не совпадет с последним элементом массива
     {
         i = indexFirstRem;
         k = i + 1;
         temp = arr[indexFirstRem];
         countOfOp += 4;
-        
+
         for (i; i > 0; i--)
         {
             if (temp < arr[i - 1])
@@ -304,25 +329,23 @@ int bin_search(int elem, int arr[], int size) {
             min = mid + 1;
         else if (elem < arr[mid])
             max = mid - 1;
-        else if (elem == arr[mid]) // вопрос про двойной ретерн
+        else if (elem == arr[mid])
             return mid;
-        else
-            return -1;
+
     }
+    return -1;
 }
 
-
-
 int barrier_search(int elem, int arr[], int size) {
-    int i = 0, res = -1; double tmp; 
+    int i = 0, res = -1; double tmp;
     tmp = arr[size - 1];
-    arr[size - 1] = elem; 
+    arr[size - 1] = elem;
     while (arr[i] != elem)
         i++;
-    arr[size - 1] = tmp; 
-    if ((i < size - 1) || (tmp == elem)) 
+    arr[size - 1] = tmp;
+    if ((i < size - 1) || (tmp == elem))
         res = i;
-    return res; 
+    return res;
 }
 
 int linear_search(int elem, int arr[], int size) {
@@ -343,10 +366,10 @@ int bubble_sort2(int arr[], int size)
     countOfOp += 1;
     for (int i = 0; i < size - 1; i++)
     {
-        for (int j = 0; j < size - i - 1; j++) 
+        for (int j = 0; j < size - i - 1; j++)
         {
-            if (arr[j] > arr[j + 1]) 
-            { 
+            if (arr[j] > arr[j + 1])
+            {
                 int tmp = arr[j];
                 arr[j] = arr[j + 1];
                 arr[j + 1] = tmp;
